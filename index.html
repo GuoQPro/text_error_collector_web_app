@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--<link rel="stylesheet" type="text/css" href="../static/mystyle.css">-->
+    <title>Over Hazed QA服文本错误收集</title>
+</head>
+
+<body>
+    <section id = "introduction">
+        说明:
+        <ul>
+            <li>仅公司内网可用</li>
+            <li>仅搜集QA服错误，按上报时间排序， 最新的在最上方</li>
+            <li>LC_XXXX 表示文本没找到</li>
+            <li>[LC_XXXX] 表示该文本配置在Flash文件中, 这种情况下，文件名列有效</li>
+            <li>其他表示文本格式有错误，在替换时出错</li>
+        </ul>
+    </section>
+    <section id = "filter">
+        <form action="/filter">
+            <fieldset>
+                <legend>添加过滤</legend>
+                文本内容:
+                <input type="text" name="text_content">
+                语言:
+                <input type="text" name="lang">
+                <input type="submit" name="filter" value="过滤">
+            </fieldset>
+        </form>
+    </section>
+    <br>
+    <section id = "table_section"></section>
+    <script type = "text/javascript" src = "/tmpfiles/script.js"></script>
+    <script>
+        RefreshPage();
+    </script>
+</body>
+
