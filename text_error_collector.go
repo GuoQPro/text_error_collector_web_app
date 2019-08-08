@@ -26,8 +26,8 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/get_records", handler_get_records).Methods("GET")
 	r.HandleFunc("/filter", handler_filter).Methods("GET")
 
-	staticFileHandler := http.StripPrefix("/tmpfiles/", http.FileServer(http.Dir("./tmp/")))
-	r.PathPrefix("/tmpfiles/").Handler(staticFileHandler).Methods("GET")
+	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets/")))
+	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 	return r
 }
 
@@ -38,6 +38,7 @@ func connect2Db(ipaddr string, port string) (sql.DB, error) {
 }
 
 func main() {
+	//args := os.Args[1:]
 	db, err := connect2Db("127.0.0.1", "3306")
 
 	if err != nil {
@@ -81,13 +82,16 @@ func handler_show_text_error(w http.ResponseWriter, r *http.Request) {
 }
 
 func handler_filter(w http.ResponseWriter, r *http.Request) {
-	m, err := util_net.ParseQuery(r)
+	result_array, err := util_net.GetQueryValues(r, "text_content", "lang")
 
 	if err != nil {
 		log.Println(err)
 	}
-	log.Println("Filter : ", m.Get("text_content"))
-	store.AddFilter(m.Get("text_content"), m.Get("lang"))
+
+	text_content, lang := string(result_array[0]), string(result_array[1])
+
+	log.Println("Filter : ", text_content, lang)
+	store.AddFilter(text_content, lang)
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
