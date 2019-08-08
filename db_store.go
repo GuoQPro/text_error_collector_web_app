@@ -82,8 +82,6 @@ func (dbs *db_store) CheckExistence(text_content string, language string) bool {
 	var result int
 	rows.Scan(&result)
 
-	//fmt.Println("CheckExistence = ", result)
-
 	return result == 1
 }
 
