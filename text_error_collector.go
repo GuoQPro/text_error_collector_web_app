@@ -45,7 +45,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	tmpl = template.Must(template.ParseFiles("index.html"))
+	tmpl = template.Must(template.ParseFiles("assets/index.html"))
 	initStore(&db)
 
 	r := newRouter()
